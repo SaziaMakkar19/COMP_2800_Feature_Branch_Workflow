@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 app.use('/css', express.static('private/css'));
 app.use('/js', express.static('private/js'));
 app.use('/html', express.static('private/html'));
+app.use('/image', express.static('private/image'));
 
 
 app.get('/', function (req, res) {
@@ -27,7 +28,7 @@ app.get('/', function (req, res) {
         lname varchar(30),
         email varchar(30),
         groupName varchar(30),
-        tel varchar(8),
+        tel varchar(10),
         PRIMARY KEY (ID)
         );`;
   connection.connect();
@@ -181,6 +182,7 @@ app.post('/delete-user', function(req, res) {
     database: 'test'
   });
 
+  
   connection.query('DELETE FROM User WHERE ID = ?',
         [req.body.id],
         function (error, results, fields) {

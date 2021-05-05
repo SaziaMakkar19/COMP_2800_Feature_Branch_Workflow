@@ -8,24 +8,24 @@ $(document).ready(function () {
       type: "GET",
       success: function (data) {
         console.log(data);
-        let str = `        <tr>
-  <th class="tableHeader"><span>ID</span></th>
-  <th class="tableHeader"><span>First Name</span></th>
-  <th class="tableHeader"><span>Last Name</span></th>
-  <th class="tableHeader"><span>Email</span></th>
-  <th class="tableHeader"><span>Group Name</span></th>
-  <th class="tableHeader"><span>Phone Number</span></th>
+        let str = `<tr>
+  <th class="tableHeader">ID</th>
+  <th class="tableHeader">First Name</th>
+  <th class="tableHeader">Last Name</th>
+  <th class="tableHeader">Email</th>
+  <th class="tableHeader">Group Name</th>
+  <th class="tableHeader">Phone Number</th>
   </tr>`;
         for (let i = 0; i < data.rows.length; i++) {
           let row = data.rows[i];
           //console.log("row", row);
           str += ("<tr><td class='id'>" + row.ID +
-            "</td><td class='fname'><span>" + row.fname +
-            "</span></td><td class='lname'><span>" + row.lname +
-            "</span></td><td class='email'><span>" + row.email +
-            "</span></td><td class='groupName'><span>" + row.groupName +
-            "</span></td><td class='email'><span>" + row.tel +
-            "</span></td><td><button class='deleteRow'>close</button></td></tr>");
+            "</td><td class='fname'>" + row.fname +
+            "</td><td class='lname'>" + row.lname +
+            "</td><td class='email'>" + row.email +
+            "</td><td class='groupName'>" + row.groupName +
+            "</td><td class='email'>" + row.tel +
+            "</td><td><button class='deleteRow'>close</button></td></tr>");
         }
         //console.log(str);
         $("#users").html(str);
@@ -64,7 +64,7 @@ $(document).ready(function () {
       data: formData,
       success: function (data) {
         //console.log(data);
-        $("#status").html("DB updated.");
+        alert("Database Updated");
         getUsers();
       },
       error: function (jqXHR, textStatus, errorThrown) {
@@ -75,25 +75,25 @@ $(document).ready(function () {
   });
 
 
-  $('#deleteAll').click(function (e) {
-    e.preventDefault();
+  // $('#deleteAll').click(function (e) {
+  //   e.preventDefault();
 
-    $.ajax({
-      url: "/delete-all-users",
-      dataType: "json",
-      type: "POST",
-      success: function (data) {
-        console.log(data);
-        $("#status").html("All records deleted.");
-        getUsers();
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-        $("#errorLog").text(jqXHR.statusText);
-        console.log("ERROR:", jqXHR, textStatus, errorThrown);
-      }
+  //   $.ajax({
+  //     url: "/delete-all-users",
+  //     dataType: "json",
+  //     type: "POST",
+  //     success: function (data) {
+  //       console.log(data);
+  //       $("#status").html("All records deleted.");
+  //       getUsers();
+  //     },
+  //     error: function (jqXHR, textStatus, errorThrown) {
+  //       $("#errorLog").text(jqXHR.statusText);
+  //       console.log("ERROR:", jqXHR, textStatus, errorThrown);
+  //     }
 
-    });
-  });
+  //   });
+  // });
 
   $('#users').on('click', 'span', function () {
 
@@ -125,7 +125,7 @@ $(document).ready(function () {
           data: dataToSend,
           success: function(data) {
               //console.log(data);
-              $("#status").html("DB updated.");
+              
               getUsers();
           },
           error: function(jqXHR, textStatus, errorThrown) {
@@ -140,6 +140,9 @@ $(document).ready(function () {
   });
 
   $('#users').on('click', 'button', function () {
+
+     var answer = confirm("Are you sure you want to delete this user?");
+     if(answer == true) {
       console.log("Deleting the row.");
       let td = $(this).parent();
       let dataToSend = {
@@ -152,7 +155,6 @@ $(document).ready(function () {
         type: "POST",
         data: dataToSend,
         success: function(data) {
-            $("#status").html("DB updated.");
             getUsers();
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -161,6 +163,8 @@ $(document).ready(function () {
         }
 
     });
+     }
+      
   });
 
 });
