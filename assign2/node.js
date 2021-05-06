@@ -115,33 +115,6 @@ app.post('/add-users', function (req, res) {
 
 });
 
-app.post('/delete-all-users', function (req, res) {
-  res.setHeader('Content-Type', 'application/json');
-
-  let connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'test'
-  });
-  connection.connect();
-  // REALLY A DUMB THING TO DO, BUT JUST SHOWING YOU CAN
-  connection.query('DELETE FROM User',
-    function (error, results, fields) {
-      if (error) {
-        throw error;
-      }
-      //console.log('Rows returned are: ', results);
-      res.send({
-        status: "success",
-        msg: "Recorded all deleted."
-      });
-
-    });
-  connection.end();
-
-});
-
 app.post('/update-user', function (req, res) {
   res.setHeader('Content-Type', 'application/json');
 
